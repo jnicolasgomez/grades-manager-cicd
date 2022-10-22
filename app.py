@@ -1,14 +1,15 @@
 from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
 from service.calculateGrades import calculateFinalGrade
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 db = SQLAlchemy(app)
 
+
 class ClassGrade():
     grade = 0
+
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
@@ -22,9 +23,10 @@ def index():
         return redirect('/')
     if ClassGrade.grade:
         grade = ClassGrade.grade
-        return render_template('index.html', final = grade)
+        return render_template('index.html', final=grade)
     else:
         return render_template('index.html')
+
 
 if __name__ == "__main__":
     app.run(debug=True)
