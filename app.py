@@ -7,14 +7,8 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 db = SQLAlchemy(app)
 
-class ClassGrade(db.Model):
+class ClassGrade():
     grade = 0
-    id = db.Column(db.Integer, primary_key=True)
-    grade = db.Column(db.Integer, nullable=False)
-    date_created = db.Column(db.DateTime, default=datetime.utcnow)
-
-    def __repr__(self):
-        return '<Task %r>' % self.id
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
@@ -25,11 +19,10 @@ def index():
         notas.append(float(request.form['grade3']))
         notas.append(float(request.form['grade4']))
         ClassGrade.grade = calculateFinalGrade(notas)
-        print(ClassGrade.grade)
         return redirect('/')
     if ClassGrade.grade:
-        print('hello')
-        return render_template('index.html', final = ClassGrade.grade)
+        grade = ClassGrade.grade
+        return render_template('index.html', final = grade)
     else:
         return render_template('index.html')
 
