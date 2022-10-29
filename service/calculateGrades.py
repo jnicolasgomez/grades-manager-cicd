@@ -1,3 +1,3 @@
 
 def calculateFinalGrade(grades):
-    return round(sum(grades)/len(grades), 4)
+    return round(sum(grades)/len(grades), 2)
